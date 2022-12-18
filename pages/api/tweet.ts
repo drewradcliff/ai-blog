@@ -1,24 +1,35 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { twitterClient } from "../../lib/twitter";
-
-// type Data = {
-//   data: CreateCompletionResponse;
-// };
+import moment from "moment";
+import { openai } from "../../lib/openai";
+import { CreateCompletionResponse } from "openai";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<CreateCompletionResponse | string>
 ) {
-  // const response = await twitterClient.users.findUsersByUsername({
-  //   usernames: ["elonmusk"],
-  // });
-
-  const response = await twitterClient.tweets.usersIdTweets("44196397", {
+  const { data } = await twitterClient.tweets.usersIdTweets("44196397", {
     exclude: ["replies", "retweets"],
+    start_time: moment().subtract(1, "day").format(),
+    max_results: 100,
+    "tweet.fields": ["public_metrics"],
   });
 
-  // if (response.errors) {
-  //   res.status(400).json({ error: response.errors });
-  // }
-  res.status(200).json({ response });
+  if (data) {
+    const topTweet = data.reduce((prev, curr) =>
+      prev.public_metrics!.like_count > curr.public_metrics!.like_count
+        ? prev
+        : curr
+    );
+
+    const { data: openAiData } = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: `Write a blog post about '${topTweet.text}' as if it was written by Elon Musk`,
+      max_tokens: 2000,
+      temperature: 0,
+    });
+    res.status(200).json(openAiData);
+  } else {
+    res.status(400).json("Error");
+  }
 }
