@@ -1,13 +1,21 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { openai } from "../../lib/openai";
+import type { NextApiRequest, NextApiResponse } from "next";
+import type { CreateCompletionResponse } from "openai";
 
 type Data = {
-  name: string
-}
+  data: CreateCompletionResponse;
+};
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  const { data } = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: "Write a blog post about this: 'https://t.co/94I61oMYFs'",
+    max_tokens: 2000,
+    temperature: 0,
+  });
+
+  res.status(200).json({ data });
 }
