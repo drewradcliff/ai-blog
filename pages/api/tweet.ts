@@ -3,6 +3,7 @@ import { twitterClient } from "../../lib/twitter";
 import moment from "moment";
 import { openai } from "../../lib/openai";
 import { CreateCompletionResponse } from "openai";
+import { prisma } from "../../lib/prisma";
 
 export default async function handler(
   req: NextApiRequest,
@@ -28,8 +29,18 @@ export default async function handler(
       max_tokens: 2000,
       temperature: 0,
     });
-    res.status(200).json(openAiData);
+
+    if (openAiData) {
+      await prisma.post.create({
+        data: {
+          content: openAiData.choices[0].text ?? "",
+        },
+      });
+      res.status(200).json(openAiData);
+    } else {
+      res.status(400).json("Error: No openai data");
+    }
   } else {
-    res.status(400).json("Error");
+    res.status(400).json("Error: No twitter data");
   }
 }
