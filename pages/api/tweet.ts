@@ -33,6 +33,7 @@ export default async function handler(
     if (openAiData) {
       await prisma.post.create({
         data: {
+          title: topTweet.text,
           content: openAiData.choices[0].text ?? "",
         },
       });
