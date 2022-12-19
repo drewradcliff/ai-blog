@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { twitterClient } from "../../lib/twitter";
 import moment from "moment";
-import { openai } from "../../lib/openai";
 import { CreateCompletionResponse } from "openai";
+import { twitterClient } from "../../lib/twitter";
+import { openai } from "../../lib/openai";
 import { prisma } from "../../lib/prisma";
 
 export default async function handler(
@@ -25,7 +25,7 @@ export default async function handler(
 
     const { data: openAiData } = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: `Write a blog post about '${topTweet.text}' as if it was written by Elon Musk`,
+      prompt: `Write a blog post in html about '${topTweet.text}' as if it was written by Elon Musk`,
       max_tokens: 2000,
       temperature: 0,
     });

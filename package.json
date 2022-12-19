@@ -16,6 +16,7 @@
     "@types/react-dom": "18.0.9",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.7",
+    "html-react-parser": "^3.0.4",
     "moment": "^2.29.4",
     "next": "13.0.7",
     "openai": "^3.1.0",
@@ -25,6 +26,7 @@
     "typescript": "4.9.4"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.8",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
     "prisma": "^4.7.1",
