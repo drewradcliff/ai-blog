@@ -1,6 +1,7 @@
 import Link from "next/link";
 import moment from "moment";
 import { prisma } from "../lib/prisma";
+import type { Post } from "@prisma/client";
 
 export default async function Home() {
   const posts = await getPosts();
@@ -12,7 +13,7 @@ export default async function Home() {
         This blog is generated from AI using Elon's tweets.
       </p>
       <div className="pt-8">
-        {posts.map((post) => (
+        {posts.map((post: Post) => (
           <Link href={"/posts/" + post.id}>
             <div className="flex justify-between">
               <h2 className="text-xl font-semibold sm:max-w-xl">
