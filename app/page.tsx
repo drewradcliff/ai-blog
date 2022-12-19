@@ -15,8 +15,10 @@ export default async function Home() {
         {posts.map((post) => (
           <Link href={"/posts/" + post.id}>
             <div className="flex justify-between">
-              <h2 className="text-xl font-semibold max-w-lg">{post.title}</h2>
-              <div className="text-gray-400">
+              <h2 className="text-xl font-semibold sm:max-w-xl">
+                {post.title}
+              </h2>
+              <div className="text-gray-400 whitespace-nowrap">
                 {moment(post.createdAt).format("MMM Do YY")}
               </div>
             </div>

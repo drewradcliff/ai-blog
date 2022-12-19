@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <html>
       <head />
-      <body className="mx-auto max-w-2xl pt-12">{children}</body>
+      <body className="px-6 sm:mx-auto max-w-2xl pt-12">{children}</body>
     </html>
   );
 }
