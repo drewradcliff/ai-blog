@@ -1,10 +1,9 @@
 import Link from "next/link";
 import moment from "moment";
 import { prisma } from "../lib/prisma";
-import type { Post } from "@prisma/client";
 
 export default async function Home() {
-  const posts: Post[] = await getPosts();
+  const posts = await getPosts();
 
   return (
     <>
