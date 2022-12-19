@@ -11,11 +11,11 @@ export default async function Post({ params }: Props) {
   const post = await getPost(Number(params.id));
   return (
     <>
-      <h1 className="text-5xl font-bold">{post?.title}</h1>
+      <h1 className="sm:text-5xl text-4xl font-bold">{post?.title}</h1>
       <h2 className="pt-4 text-gray-400">
         {moment(post?.createdAt).format("MMMM DD, YYYY")}
       </h2>
-      <article className="pt-8 prose prose-invert">
+      <article className="pt-8 prose prose-invert pb-16 prose-h1:text-2xl">
         {parse(post?.content as string)}
       </article>
     </>
