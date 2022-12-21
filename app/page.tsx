@@ -13,9 +13,9 @@ export default async function Home() {
       </p>
       <div className="pt-8">
         {posts.map((post) => (
-          <Link href={"/posts/" + post.id}>
-            <div className="flex justify-between">
-              <h2 className="text-xl font-semibold sm:max-w-xl">
+          <Link key={post.id} href={"/posts/" + post.id}>
+            <div className="flex justify-between pt-8">
+              <h2 className="text-xl font-semibold sm:max-w-lg">
                 {post.title}
               </h2>
               <div className="text-gray-400 whitespace-nowrap">
