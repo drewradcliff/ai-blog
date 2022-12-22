@@ -25,7 +25,7 @@ export default async function handler(
     const { data: openAiData } = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: `Write a blog post in html about '${topTweet?.text}' as if it was written by Elon Musk`,
-      max_tokens: 2000,
+      max_tokens: 10,
       temperature: 0,
     });
     await prisma.post.create({
