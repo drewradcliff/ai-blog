@@ -32,6 +32,7 @@ export default async function handler(
       data: {
         title: topTweet?.text as string,
         content: openAiData.choices[0].text ?? "",
+        tweetUrl: "https://twitter.com/elonmusk/status/" + topTweet?.id,
       },
     });
     res.status(200).json(openAiData);
