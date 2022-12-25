@@ -16,28 +16,31 @@ export default async function handler(
       "tweet.fields": ["public_metrics"],
     });
 
-    const topTweet = data?.reduce((prev, curr) =>
-      prev.public_metrics!.like_count > curr.public_metrics!.like_count
-        ? prev
-        : curr
-    );
+    if (data) {
+      const topTweet = data?.reduce((prev, curr) =>
+        prev.public_metrics!.like_count > curr.public_metrics!.like_count
+          ? prev
+          : curr
+      );
 
-    const { data: openAiData } = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: `Write a blog post in html about '${topTweet?.text}' as if it was written by Elon Musk`,
-      max_tokens: 400,
-      temperature: 0,
-    });
-    await prisma.post.create({
-      data: {
-        title: topTweet?.text as string,
-        content: openAiData.choices[0].text ?? "",
-        tweetUrl: "https://twitter.com/elonmusk/status/" + topTweet?.id,
-      },
-    });
-    res.status(200).json(openAiData);
+      const { data: openAiData } = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: `Write a blog post in html about '${topTweet?.text}' as if it was written by Elon Musk`,
+        max_tokens: 2000,
+        temperature: 0,
+      });
+      await prisma.post.create({
+        data: {
+          title: topTweet.text,
+          content: openAiData.choices[0].text ?? "",
+          tweetUrl: "https://twitter.com/elonmusk/status/" + topTweet.id,
+        },
+      });
+      res.status(200).json(openAiData);
+    } else {
+      return res.status(400).json("No tweets available today");
+    }
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ error });
   }
 }
