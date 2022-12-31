@@ -1,6 +1,6 @@
 import Link from "next/link";
 import moment from "moment";
-import { prisma } from "../lib/prisma";
+import { getPosts } from "../lib";
 
 export default async function Home() {
   const posts = await getPosts();
@@ -28,7 +28,3 @@ export default async function Home() {
     </>
   );
 }
-
-const getPosts = async () => {
-  return await prisma.post.findMany();
-};

@@ -1,7 +1,6 @@
 import moment from "moment";
 import parse from "html-react-parser";
-import { prisma } from "../../../lib/prisma";
-import type { Post } from "@prisma/client";
+import { getPost, getPosts } from "../../../lib";
 
 type Props = {
   params: { id: string };
@@ -23,17 +22,9 @@ export default async function Post({ params }: Props) {
 }
 
 export async function generateStaticParams() {
-  const posts = await prisma.post.findMany();
+  const posts = await getPosts();
 
   return posts.map((post) => ({
     id: post.id.toString(),
   }));
 }
-
-const getPost = async (id: number) => {
-  return await prisma.post.findUnique({
-    where: {
-      id,
-    },
-  });
-};
