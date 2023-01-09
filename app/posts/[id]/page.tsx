@@ -1,6 +1,6 @@
 import moment from "moment";
 import parse from "html-react-parser";
-import { getPost, getPosts } from "../../../lib";
+import { getPost } from "../../../lib";
 
 type Props = {
   params: { id: string };
@@ -19,12 +19,4 @@ export default async function Post({ params }: Props) {
       </article>
     </>
   );
-}
-
-export async function generateStaticParams() {
-  const posts = await getPosts();
-
-  return posts.map((post) => ({
-    id: post.id.toString(),
-  }));
 }
