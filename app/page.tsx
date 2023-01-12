@@ -15,7 +15,7 @@ export default async function Home() {
         {posts.map((post) => (
           <Link key={post.id} href={"/posts/" + post.id}>
             <div className="flex justify-between pt-8">
-              <h2 className="text-xl font-semibold sm:max-w-lg">
+              <h2 className="text-xl font-semibold w-3/4 sm:w-5/6">
                 {post.title}
               </h2>
               <div className="text-gray-400 whitespace-nowrap">
