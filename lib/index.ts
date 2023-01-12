@@ -13,7 +13,7 @@ export const getPost = async (id: number) => {
 export const getPosts = async () => {
   const res = await fetch(process.env.AI_BLOG_API_URL! + "/posts", {
     next: {
-      revalidate: 86400,
+      revalidate: 60,
     },
     headers: {
       Authorization: `Bearer ${process.env.NEXT_API_KEY}`,
