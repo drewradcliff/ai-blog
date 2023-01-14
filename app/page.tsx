@@ -17,7 +17,7 @@ export default async function Home() {
             <div className="flex justify-between pt-8 gap-4">
               <h2 className="text-xl font-semibold">{post.title}</h2>
               <div className="text-gray-400 whitespace-nowrap">
-                {moment(post.createdAt).format("MMM Do YY")}
+                {moment(post.createdAt).local().format("MMM Do YY")}
               </div>
             </div>
           </Link>

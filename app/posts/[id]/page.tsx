@@ -12,7 +12,7 @@ export default async function Post({ params }: Props) {
     <>
       <h1 className="sm:text-5xl text-4xl font-bold">{post?.title}</h1>
       <h2 className="pt-4 text-gray-400">
-        {moment(post?.createdAt).format("MMMM DD, YYYY")}
+        {moment(post?.createdAt).local().format("MMMM DD, YYYY")}
       </h2>
       <article className="py-10 prose prose-invert prose-h1:text-2xl">
         {parse(post?.content as string)}
